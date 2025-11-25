@@ -16,7 +16,7 @@ const Navbar = () => {
  // Hàm xử lý tìm kiếm
   const handleSearch = () => {
     if (searchTerm) {
-      navigate(`/search/${searchTerm}`); // Chuyển hướng
+      navigate(`/search/${searchTerm.trim()}`); // Chuyển hướng
       setSearchTerm(""); // Reset input
     }
   };
