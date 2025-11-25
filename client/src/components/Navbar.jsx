@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom"; // Đã thêm useNavigate
 import { useStateContext } from "../context";
 import { cross, logo, menu, search } from "../assets";
 import { navlinks } from "../constants";
@@ -8,8 +8,25 @@ import { ConnectWallet, darkTheme, lightTheme } from "@thirdweb-dev/react";
 import ThemeModes from "./ThemeModes";
 
 const Navbar = () => {
+  const navigate = useNavigate(); // Hook chuyển trang
   const [toggleDrawer, setToggleDrawer] = useState(false);
   const { address, themeMode } = useStateContext();
+  const [searchTerm, setSearchTerm] = useState(""); // State lưu từ khóa
+
+ // Hàm xử lý tìm kiếm
+  const handleSearch = () => {
+    if (searchTerm) {
+      navigate(`/search/${searchTerm}`); // Chuyển hướng
+      setSearchTerm(""); // Reset input
+    }
+  };
+
+  // Xử lý phím Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
@@ -17,13 +34,19 @@ const Navbar = () => {
         <input
           type="text"
           placeholder="Search for campaigns"
-          className="flex w-full font-epilogue font-normal text-sm placeholder:text-[#6e7682]  text-black dark:text-white bg-transparent outline-none"
+          className="flex w-full font-epilogue font-normal text-sm placeholder:text-[#6e7682] text-black dark:text-white bg-transparent outline-none"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
-        <div className="w-[72px] h-full rounded-[20px] bg-[#6F01Ec] flex justify-center items-center cursor-pointer shadow-md">
+        <div
+          className="w-[72px] h-full rounded-[20px] bg-[#6F01Ec] flex justify-center items-center cursor-pointer shadow-md"
+          onClick={handleSearch}
+        >
           <img
             src={search}
             alt="search"
-            className="w-[18px] h-[18px] object-contain "
+            className="w-[18px] h-[18px] object-contain"
           />
         </div>
       </div>
@@ -78,6 +101,7 @@ const Navbar = () => {
 
       {/* small screen navigation */}
 
+ 
       <div className="sm:hidden flex justify-between items-center relative">
         <div className="w-14 h-14 rounded-xl bg-[#f0f0f0] dark:bg-[#2c2f32] flex justify-center items-center cursor-pointer shadow-md">
           <NavLink

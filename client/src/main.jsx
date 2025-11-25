@@ -23,6 +23,8 @@ import {
   Withdraw,
 } from "./pages";
 
+import SearchResults from "./pages/SearchResults";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +57,11 @@ const router = createBrowserRouter([
       {
         path: "/disconnect",
         element: <Disconnect />,
+      },
+      // Thêm route cho trang tìm kiếm
+      {
+        path: "/search/:searchTerm",
+        element: <SearchResults />,
       },
     ],
   },
