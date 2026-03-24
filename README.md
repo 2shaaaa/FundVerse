@@ -27,7 +27,7 @@ Open your browser and visit http://localhost:5173 to view the user interface of 
 
 Stay in the `FundVerse` directory and run this command:
 
-     docker build -t fundverse -f dockerClone/Dockerfile .
+     docker build -t fundverse -f docker/Dockerfile.local .
 Once the image has been built, run the container with the command:
 
      docker run -d -p 8080:80 --name fundverse-container fundverse
